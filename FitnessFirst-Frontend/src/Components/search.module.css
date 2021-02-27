@@ -1,0 +1,13 @@
+.searchresult
+{
+	position:absolute;
+background:white;
+width:100%;
+padding:10px;
+border:1px solid gray;
+display:none;
+}
+.searchcontainer
+{
+	position:relative;
+}
