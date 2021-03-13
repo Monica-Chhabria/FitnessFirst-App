@@ -3,6 +3,7 @@ import React, { Fragment ,useState,useEffect} from 'react'
 import { Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import classes from "./search.module.css"
 import FoodTable from './FoodTable';
+import { apiRequest } from '../api/utils';
 
 export default function SearchFood(props) {
 const [fooditem,setfooditem] = useState([]);
@@ -114,9 +115,60 @@ const setFoodDetails = (food) =>
         
         //setfooditem([...fooditem,{foodname:'Monica 2'}]);
        // 
+       apiRequest('GET', `/v2/search/instant?query=${searchval}`,null,'NUTRITIONIX').then( function getData(result) {
+        // that.getVal(result);
+       /* let data = result.data;
+
+        let arr = [];
+               //let text = `<div class = 'list-group'>`;
+               var x= data.exercises;
+              // console.log(x);
+               const map =  x.map(i => {
+             
+               //arr[] = ;
+               arr.push({nf_calories:i.nf_calories});
+               that.setState({ ...that.state, calories: i.nf_calories })
+        console.log(data);
+        })*/
+
+        const data = result.data;
+        // console.log(data);
+        let arr = [];
+         //let text = `<div class = 'list-group'>`;
+         var x= data.common;
+        // console.log(x);
+         const map =  x.map(i => {
+           /*  console.log("food name"+i.food_name);
+         console.log("serving_unit"+i.serving_unit);
+         console.log("serving_qty"+i.serving_qty);*/
+         //arr[] = ;
+         arr.push({foodname:i.food_name,servingunit:i.serving_unit,servingquantity:i.serving_qty});
+
+        // setfooditem([...fooditem,{foodname:i.food_name}]);
       
+         /*for(var i = 0; i < fooditem.length ; i++){
+           console.log("array"+fooditem[i])
+       }*/
+
+         /*for(let key in i) {
+           if(i.hasOwnProperty(key)) {
+               var value = i[key];
+               console.log("food_name "+i.food_name);
+               console.log('value '+value);
+               //do something with value;
+           }
+       }*/
+       });
+       setfooditem(arr);
+       callback(arr);
+
+
+       })
+       .catch(function getError(error){
+         console.log(error);
+       });
         const axios = require('axios');
-        axios.get(`https://trackapi.nutritionix.com/v2/search/instant?query=${searchval}`,{  headers: {
+      /*  axios.get(`https://trackapi.nutritionix.com/v2/search/instant?query=${searchval}`,{  headers: {
             'x-app-id': '0be23763',
             'x-app-key':'18a59c6f58cbcd1f4d04948204affa65'
           }})
@@ -128,23 +180,20 @@ const setFoodDetails = (food) =>
 
         .then(res => {
           const data = res.data;
-         // console.log(data);
+       
          let arr = [];
-          //let text = `<div class = 'list-group'>`;
           var x= data.common;
-         // console.log(x);
+      
           const map =  x.map(i => {
-            /*  console.log("food name"+i.food_name);
-          console.log("serving_unit"+i.serving_unit);
-          console.log("serving_qty"+i.serving_qty);*/
-          //arr[] = ;
+          
           arr.push({foodname:i.food_name,servingunit:i.serving_unit,servingquantity:i.serving_qty});
+*/
+
+
+
 
          // setfooditem([...fooditem,{foodname:i.food_name}]);
        
-          /*for(var i = 0; i < fooditem.length ; i++){
-            console.log("array"+fooditem[i])
-        }*/
 
           /*for(let key in i) {
             if(i.hasOwnProperty(key)) {
@@ -154,9 +203,15 @@ const setFoodDetails = (food) =>
                 //do something with value;
             }
         }*/
+
+
+
+      /*  
         });
         setfooditem(arr);
         callback(arr);
+*/
+
 
       //  console.log();
         /*  for (let key in data) {
@@ -200,7 +255,8 @@ const setFoodDetails = (food) =>
 			{
 		$(".search-result").show();
 			}*/
-        });
+     
+    /*});*/
       
     }
 /*

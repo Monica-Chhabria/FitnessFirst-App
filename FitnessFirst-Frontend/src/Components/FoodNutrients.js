@@ -5,6 +5,7 @@ import {
   CardTitle, CardSubtitle
 } from 'reactstrap';
 import { ToastContainer, toast } from 'react-toastify';
+import { apiRequest } from '../api/utils';
 
 import {connect} from 'react-redux';
 
@@ -27,7 +28,7 @@ const notify = (messagetype,message) => {
 };
   const saveFood = ()=>
   {
-    
+    let that = this;
     const params = {
 
       "calories": props.location.calories,
@@ -41,7 +42,15 @@ const notify = (messagetype,message) => {
       "potassium":props.location.potassium,
       "total_carbohydrate":props.location.total_carbohydrate
       };
-  axios.post("http://localhost:8761/FITNESSFIRST-CALORIES-SERVICE/api/saveFood",   params,
+
+      apiRequest('POST', `/api/saveFood`,params,'CALORIE').then( function getData(result) {
+        
+        setTimeout(   notify("success","Food Added Successfully"), 30000000);
+       })
+      .catch(function getError(error){
+        setTimeout(   notify("error","Error while adding Food"), 30000000);
+      });
+  /*axios.post("http://localhost:8761/FITNESSFIRST-CALORIES-SERVICE/api/saveFood",   params,
   {  headers: {
   
    'Access-Control-Allow-Origin': '*',
@@ -60,7 +69,7 @@ const notify = (messagetype,message) => {
           setTimeout(   notify("error","Error while adding Food"), 30000000);
          
           // dispatch(failure());
-      });
+      });*/
 
   }
 

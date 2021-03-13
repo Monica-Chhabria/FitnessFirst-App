@@ -6,6 +6,7 @@ import { Form, FormGroup, Label, Input, FormText, Container, Col, Button } from 
 import PropTypes from 'prop-types';  
 import { ToastContainer, toast } from 'react-toastify';
 import history from './historytest';
+import { apiRequest } from '../api/utils';
 
 export default class RegisterForm extends React.Component {
     constructor() {
@@ -33,6 +34,7 @@ export default class RegisterForm extends React.Component {
     };
     saveUser=()=>
     {
+        var that = this;
         const params = JSON.stringify({
 
             "password": this.state.password,
@@ -41,8 +43,19 @@ export default class RegisterForm extends React.Component {
             
             });
            // delete axios.defaults.headers.common["Authorisation"];
+           apiRequest('POST', `/saveUser`,params,'USER').then( function getData(result) {
+            setTimeout(   that.notify("success","Registration Done Successfully"), 30000000);
 
-        axios.post("http://localhost:8085/saveUser",   params,
+            //let data = response.data;
+        
+           })
+          .catch(function getError(error){
+            console.log(error);
+               
+            that.notify("error","Registration Not Done Successfully");
+          });
+         
+        /*axios.post("http://localhost:8085/saveUser",   params,
         {  headers: {
         
          'Access-Control-Allow-Origin': '*',
@@ -62,12 +75,36 @@ export default class RegisterForm extends React.Component {
                
                this.notify("error","Registration Not Done Successfully");
               
-            });
+            });*/
         
     }
     componentDidMount() {
+        var that = this;
         let initialcity = [];
-        fetch('http://localhost:8761/FITNESSFIRST-USERDETAILS-SERVICE/fetchCity')
+        apiRequest('GET', `/fetchCity`,null,'USER').then( function getData(result) {
+            let data = result.data;
+            initialcity = data.map((cit) => {
+                return cit.code
+            });
+           // console.log(initialcity);
+           that.setState({
+                city: initialcity,
+            });
+            /* console.log(result);
+             data1 = result.data.calburnt;*/
+            // const data = res.data.calburnt;
+             //console.log("fetch exercise details"+data);  
+          
+            //console.log("fetch exercise details"+data);  
+          
+          
+            //dataObj = result;
+          //}*/)
+           })
+          .catch(function getError(error){
+            console.log(error);
+          });
+       /* fetch('http://localhost:8761/FITNESSFIRST-USERDETAILS-SERVICE/fetchCity')
             .then(response => {
                 return response.json();
             }).then(data => {
@@ -78,7 +115,7 @@ export default class RegisterForm extends React.Component {
             this.setState({
                 city: initialcity,
             });
-        });
+        });*/
     }
     render() {
         let city = this.state.city;

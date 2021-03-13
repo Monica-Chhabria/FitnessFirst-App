@@ -6,6 +6,7 @@ import fetchdataurl from './Constants';
 import history from './historytest';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import { apiRequest } from '../api/utils';
 
 
 function FoodTable(props) {
@@ -28,7 +29,67 @@ const callNutrientsApi = (searchval) =>
 {
 
 
-      
+  apiRequest('GET', `/api/nutrients/${searchval}`,null,'CALORIE').then( function getData(result) {
+    const data = result.data;
+    // alert(data.foods);
+    // console.log(data);
+    let arr = {};
+     //let text = `<div class = 'list-group'>`;
+     var x= data.foods;
+    // console.log(x);
+     const map =  x.map(i => {
+    
+    arr.foodname= searchval;
+    arr.calories = i.nf_calories;
+    arr.total_fat = i.nf_total_fat;
+    arr.cholesterol = i.nf_cholesterol;
+    arr.sugar = i.nf_sugars;
+    arr.protein = i.nf_protein;
+    arr.potassium = i.nf_potassium;
+    arr.carbohydrate = i.nf_total_carbohydrate;
+    //alert(i.nf_calories);
+     //arr.push({foodname:searchval,calories:i.nf_calories});
+
+    // setfooditem([...fooditem,{foodname:i.food_name}]);
+  
+     /*for(var i = 0; i < fooditem.length ; i++){
+       console.log("array"+fooditem[i])
+   }*/
+
+     /*for(let key in i) {
+       if(i.hasOwnProperty(key)) {
+           var value = i[key];
+           console.log("food_name "+i.food_name);
+           console.log('value '+value);
+           //do something with value;
+       }
+   }*/
+   });
+   setNutrientArr(arr.foodname);
+ //  alert(arr.foodname);
+   //alert("inside arr"+arr.size);
+ //  alert(nutrientsarr);
+ //  toggle();
+
+
+ //const history = createBrowserHistory();
+history.push({ pathname:"/nutrition",
+calories:arr.calories,food_name:arr.foodname,total_fat:arr.total_fat,cholesterol:arr.cholesterol,sugar:arr.sugar,protein:arr.protein,potassium:arr.potassium,carbohydrate:arr.carbohydrate});
+    /* console.log(result);
+     data1 = result.data.calburnt;*/
+    // const data = res.data.calburnt;
+     //console.log("fetch exercise details"+data);  
+  
+    //console.log("fetch exercise details"+data);  
+  
+  
+    //dataObj = result;
+  //}*/)
+   })
+  .catch(function getError(error){
+    console.log(error);
+  });
+  /*
     //   const axios = require('axios');
        axios.get(`http://localhost:8761/FITNESSFIRST-CALORIES-SERVICE/api/nutrients/${searchval}`,
        
@@ -72,7 +133,7 @@ const callNutrientsApi = (searchval) =>
                //do something with value;
            }
        }*/
-       });
+      /* });
        setNutrientArr(arr.foodname);
      //  alert(arr.foodname);
        //alert("inside arr"+arr.size);
@@ -139,7 +200,7 @@ carbohydrate*/
      {
    $(".search-result").show();
      }*/
-       });
+     /*  });*/
   
 }
 

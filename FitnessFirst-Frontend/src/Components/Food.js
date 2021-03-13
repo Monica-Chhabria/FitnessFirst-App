@@ -10,6 +10,8 @@ import {faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import { Form, FormGroup, Label, Input, FormText,Container,Col,Row } from 'reactstrap';
 import {useState,useEffect} from 'react';
 import { Table } from 'reactstrap';
+import { apiRequest } from '../api/utils';
+
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button
@@ -111,6 +113,26 @@ const  Food  = (props) =>{
              
              }*/
           //Breakfast totalcal
+
+          apiRequest('GET', `/api/totalCalPerMealPerDay/${props.auth.username}/BreakFast`,null,'CALORIE').then( function getData(res) {
+            const data = res.data.totalcalpermeal;
+            // alert(data);
+                    setBreakfasttotal(data);
+            /* console.log(result);
+             data1 = result.data.calburnt;*/
+            // const data = res.data.calburnt;
+             //console.log("fetch exercise details"+data);  
+          
+            //console.log("fetch exercise details"+data);  
+          
+          
+            //dataObj = result;
+          //}*/)
+           })
+          .catch(function getError(error){
+            console.log(error);
+          });
+/*
           axios.get(`http://localhost:8761/FITNESSFIRST-CALORIES-SERVICE/api/totalCalPerMealPerDay/${props.auth.username}/BreakFast`,
        
           {  headers: {
@@ -123,9 +145,26 @@ const  Food  = (props) =>{
            // alert(data);
                    setBreakfasttotal(data);
           });
-          
+          */
          //lunch totalcal
-         axios.get(`http://localhost:8761/FITNESSFIRST-CALORIES-SERVICE/api/totalCalPerMealPerDay/${props.auth.username}/Lunch`,
+         apiRequest('GET', `/api/totalCalPerMealPerDay/${props.auth.username}/Lunch`,null,'CALORIE').then( function getData(res) {
+          const data = res.data.totalcalpermeal;
+          setLunchtotal(data);
+          /* console.log(result);
+           data1 = result.data.calburnt;*/
+          // const data = res.data.calburnt;
+           //console.log("fetch exercise details"+data);  
+        
+          //console.log("fetch exercise details"+data);  
+        
+        
+          //dataObj = result;
+        //}*/)
+         })
+        .catch(function getError(error){
+          console.log(error);
+        });
+      /*   axios.get(`http://localhost:8761/FITNESSFIRST-CALORIES-SERVICE/api/totalCalPerMealPerDay/${props.auth.username}/Lunch`,
        
          {  headers: {
          
@@ -136,10 +175,28 @@ const  Food  = (props) =>{
                    const data = res.data.totalcalpermeal;
             setLunchtotal(data);
          });
+*/
+       //dinner totalcal
+        apiRequest('GET', `/api/totalCalPerMealPerDay/${props.auth.username}/Dinner`,null,'CALORIE').then( function getData(res) {
+            const data = res.data.totalcalpermeal;
+             setDinnertotal(data);
+            /* console.log(result);
+               data1 = result.data.calburnt;*/
+           // const data = res.data.calburnt;
+              //console.log("fetch exercise details"+data);  
+
+              //console.log("fetch exercise details"+data);  
 
 
-         //dinner totalcal
-         axios.get(`http://localhost:8761/FITNESSFIRST-CALORIES-SERVICE/api/totalCalPerMealPerDay/${props.auth.username}/Lunch`,
+            //dataObj = result;
+            //}*/)
+         })
+       .catch(function getError(error){
+        console.log(error);
+        });
+/*
+        
+         axios.get(`http://localhost:8761/FITNESSFIRST-CALORIES-SERVICE/api/totalCalPerMealPerDay/${props.auth.username}/Dinner`,
        
          {  headers: {
          
@@ -152,9 +209,28 @@ const  Food  = (props) =>{
             setDinnertotal(data);
          });
 
-
+*/
           //lunch allcal
-          axios.get(`http://localhost:8761/FITNESSFIRST-CALORIES-SERVICE/api/calPerMealPerDay/${props.auth.username}/Lunch`,
+
+          apiRequest('GET', `/api/calPerMealPerDay/${props.auth.username}/Lunch`,null,'CALORIE').then( function getData(res) {
+            const data = res.data.calpermeal;
+                   
+            setLunch(data);
+            /* console.log(result);
+               data1 = result.data.calburnt;*/
+           // const data = res.data.calburnt;
+              //console.log("fetch exercise details"+data);  
+
+              //console.log("fetch exercise details"+data);  
+
+
+            //dataObj = result;
+            //}*/)
+         })
+       .catch(function getError(error){
+        console.log(error);
+        });
+          /*axios.get(`http://localhost:8761/FITNESSFIRST-CALORIES-SERVICE/api/calPerMealPerDay/${props.auth.username}/Lunch`,
        
           {  headers: {
           
@@ -166,9 +242,29 @@ const  Food  = (props) =>{
                    
              setLunch(data);
           });
-
+        */
           
           //breakfast allcal
+
+          apiRequest('GET', `/api/calPerMealPerDay/${props.auth.username}/BreakFast`,null,'CALORIE').then( function getData(res) {
+            const data = res.data.calpermeal;
+                   
+            setBreakfast(data);
+            /* console.log(result);
+               data1 = result.data.calburnt;*/
+           // const data = res.data.calburnt;
+              //console.log("fetch exercise details"+data);  
+
+              //console.log("fetch exercise details"+data);  
+
+
+            //dataObj = result;
+            //}*/)
+         })
+       .catch(function getError(error){
+        console.log(error);
+        });
+        /*
           axios.get(`http://localhost:8761/FITNESSFIRST-CALORIES-SERVICE/api/calPerMealPerDay/${props.auth.username}/BreakFast`,
        
           {  headers: {
@@ -182,9 +278,29 @@ const  Food  = (props) =>{
              setBreakfast(data);
           });
 
-
+*/
           //dinner allcal
-          axios.get(`http://localhost:8761/FITNESSFIRST-CALORIES-SERVICE/api/calPerMealPerDay/${props.auth.username}/Dinner`,
+
+          apiRequest('GET', `/api/calPerMealPerDay/${props.auth.username}/Dinner`,null,'CALORIE').then( function getData(res) {
+            const data = res.data.calpermeal;
+            //  alert(data.length);
+            setDinner(data);
+            /* console.log(result);
+               data1 = result.data.calburnt;*/
+           // const data = res.data.calburnt;
+              //console.log("fetch exercise details"+data);  
+
+              //console.log("fetch exercise details"+data);  
+
+
+            //dataObj = result;
+            //}*/)
+         })
+       .catch(function getError(error){
+        console.log(error);
+        });
+        
+         /* axios.get(`http://localhost:8761/FITNESSFIRST-CALORIES-SERVICE/api/calPerMealPerDay/${props.auth.username}/Dinner`,
        
           {  headers: {
           
@@ -195,7 +311,7 @@ const  Food  = (props) =>{
                     const data = res.data.calpermeal;
                   //  alert(data.length);
              setDinner(data);
-          });
+          });*/
     }, []);
     
   const setFoodAndRedirect = (meal) => {

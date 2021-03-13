@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: FitnessFirst-Eureka-Server-App
+    
+
+zuul:
+  #Service will be mapped under the /api URI
+  ignoredServices: '*'
+  #prefix: /api
+  routes:
+    FitnessFirst-Calories-Service:
+      path: /FITNESSFIRST-CALORIES-SERVICE/**
+      
+      #serviceId: FITNESSFIRST-CALORIES-SERVICE
+      url: http://localhost:8080
+      
+    FitnessFirst-UserDetails-Service:
+      path: /FITNESSFIRST-USERDETAILS-SERVICE/**
+      
+      #serviceId: FITNESSFIRST-CALORIES-SERVICE
+      url: http://localhost:8085
+     
+    FitnessFirst-Authentication-Service:
+      path: /FITNESSFIRST-AUTHENTICATION-SERVICE/**
+      
+      #serviceId: FITNESSFIRST-CALORIES-SERVICE
+      url: http://localhost:8086 
+    
+    FitnessFirst-Exercise-Service:
+     path: /FITNESSFIRST-EXERCISE-SERVICE/**
+      
+     #serviceId: FITNESSFIRST-CALORIES-SERVICE
+     url: http://localhost:8087   
+    
+  ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
+    #ignoredHeaders: Access-Control-Allow-Credentials, Access-Control-Allow-Origin        
+      

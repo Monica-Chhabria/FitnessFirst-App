@@ -2,7 +2,10 @@ import * as AT from './authTypes';
 import axios from 'axios';
 import authToken from '../utils/authToken';
 import MyToast from '../../Components/MyToast';
+import { apiRequest } from '../../api/utils';
+
 export const authenticateUser = (email, password) => {
+    
     const credentials = {
         username: email,
         password: password
@@ -19,14 +22,25 @@ export const authenticateUser = (email, password) => {
             
             };
          delete axios.defaults.headers.common["Authorisation"];
+         
+         apiRequest('POST', `/api/authenticate`,params,'AUTHENTICATE').then( function getData(result) {
+            // that.getVal(result);
+            let token = result.data.jwt;
+            localStorage.setItem('jwtToken', token);
+            authToken(token);
+            dispatch(success(true,email));
+            return true;
+           })
+           .catch(function getError(error){
+             
+               // alert(error);
+               dispatch(failure());
+               return false;
+           });
 
-        axios.post("http://localhost:8761/FITNESSFIRST-AUTHENTICATION-SERVICE/api/authenticate",   params
+       /* axios.post("http://localhost:8761/FITNESSFIRST-AUTHENTICATION-SERVICE/api/authenticate",   params
         
-        //axios.post("http://localhost:8086/api/authenticate",   params
-        /*{  headers: {
-        
-         'Access-Control-Allow-Origin': '*'
-       }}*/)
+       )
             .then(response => {
                 let token = response.data.jwt;
                 localStorage.setItem('jwtToken', token);
@@ -39,7 +53,7 @@ export const authenticateUser = (email, password) => {
                // alert(error);
                 dispatch(failure());
                 return false;
-            });
+            });*/
         /*
             let initialcity = [];
         //    fetch('http://localhost:8761/FITNESSFIRST-USERDETAILS-SERVICE/fetchCity')

@@ -4,43 +4,114 @@ import axios from 'axios';
 import { Table } from 'reactstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import {connect} from 'react-redux';
-
+import { apiRequest } from '../api/utils';
+import Loader from './General/Loader';
+import Error from './General/Error';
 class Exercise extends React.Component {
+   
     credentialChange = event => {
         this.setState({
             [event.target.name] : event.target.value
         });
     };
+ getVal(result)
+  {
+    let data1;
+    console.log(result);
+    data1 = result.data.calburnt;
+    this.setState({ ...this.state,exercisedetails:data1
+    });
+  }
 componentDidMount=()=>
 {
-  axios.get(`http://localhost:8761/FITNESSFIRST-EXERCISE-SERVICE/api/calBurntPerDay/${this.props.auth.username}`,
-       
-  {  headers: {
-  
-   'Access-Control-Allow-Origin': '*'
- }}
-  )
-  .then(res => {
-            const data = res.data.calpermeal;
-            console.log("fetch exercise details"+data);  
-            this.setState({ ...this.state,exercisedetails:data
-            });
+  var that = this;
+let data1=[];
 
-          //  this.setState({ ...this.state,exercisedetails:  [...this.state.exercisedetails,{exercise,calories}]}, () => {
+ /* let resp = apiRequest('GET', `/api/calBurntPerDay/${this.props.auth.username}`).then(function (result) {
+    console.log(result);
+     data1 = result.data.calburnt;
+    // const data = res.data.calburnt;
+     //console.log("fetch exercise details"+data);  
+     this.setState({ ...this.state,exercisedetails:data1
+     });
+    //console.log("fetch exercise details"+data);  
 
-     //setLunch(data);
-  });
+
+    //dataObj = result;
+})
+.catch(function(error){
+    console.log(error);
+});*/
+
+this.setState({ ...this.state,loading:true
+});
+ apiRequest('GET', `/api/calBurntPerDay/${this.props.auth.username}`,null,'EXERCISE').then( function getData(result) {
+  that.getVal(result);
+  /* console.log(result);
+   data1 = result.data.calburnt;*/
+  // const data = res.data.calburnt;
+   //console.log("fetch exercise details"+data);  
+
+  //console.log("fetch exercise details"+data);  
+
+
+  //dataObj = result;
+//}*/)
+ })
+.catch(function getError(error){
+  console.log(error);
+});
+//return <Loader size={50} />;
+
+/*
+if (this.state.loading) {
+  return <Loader size={50} />;
+} else if (this.state.error) {
+  return <Error message="Failed to load products"  />;
+}*/
+
+
+/* else if (product) {
+  return (
+    <div className="product">
+      <ImageSlider product={product} />
+      <Information product={product} />
+    </div>
+  );
+} else {
+  return null;
+}*/
+//this.setState({ ...this.state,exercisedetails:data1
+//});
+//this.setState({ ...this.state,exercisedetails:data
+//});
+
+//});
+/*.then(time => {
+    console.log("resp"+resp);
+})*/
+/*.catch(error => {
+    // Handle/report error
+});;*/
+ // console.log("resp "+resp.data);
+ // console.log( "resp"+resp);
+
+  }
 
  // console.log("inside component did mount");
-}
+
     constructor() {
         super();
         this.state = this.initialState;
+      //  this.getVal = this.getVal.bind(this);
+
     }
     initialState = {
         exercise:'',
         calories:0,
-        exercisedetails:[]
+        exercisedetails:[],
+        loading:false,
+        error:null
     };
      notify = (messagetype,message) => {
       if(messagetype=="success")
@@ -90,6 +161,7 @@ componentDidMount=()=>
     addExercise = (exercise,calories)=>
     {
       try{ 
+        
         this.saveCalorie();
       this.setState({ ...this.state,exercisedetails:  [...this.state.exercisedetails,{exercise,calories}]}, () => {
         console.log("exercise details "+this.state.exercisedetails);      });
@@ -132,7 +204,8 @@ componentDidMount=()=>
         }
        saveCalorie = ()=>
         {
-          alert('inside savecalorie');
+          var that = this;
+
           const params = {
       
             "exercise": this.state.exercise,
@@ -140,6 +213,16 @@ componentDidMount=()=>
             ///"meal": props.food.meal,
             "username":this.props.auth.username
             };
+
+            apiRequest('POST', `/api/saveExercise`,params,'EXERCISE').then( function getData(result) {
+              setTimeout(that.notify("success","Exercise Added Successfully"), 30000000);
+          
+             })
+            .catch(function getError(error){
+              setTimeout(that.notify("error","Error while adding Exercise"), 30000000);
+              console.log(error);
+            });
+/*
         axios.post("http://localhost:8761/FITNESSFIRST-EXERCISE-SERVICE/api/saveExercise",   params,
         {  headers: {
         
@@ -147,7 +230,7 @@ componentDidMount=()=>
          'Content-Type': 'application/json'
        }})
             .then(response => {
-                let token = response.data;
+                //let token = response.data;
                 setTimeout(this.notify("success","Exercise Added Successfully"), 30000000);
       
                // localStorage.setItem('jwtToken', token);
@@ -159,11 +242,13 @@ componentDidMount=()=>
                 setTimeout(this.notify("error","Error while adding Exercise"), 30000000);
                
                 // dispatch(failure());
-            });
+            });*/
       
         }
     getCalorieDetails = ()=>
     {
+      var that = this;
+
         const params = {
 
             "query": this.state.exercise
@@ -174,8 +259,26 @@ componentDidMount=()=>
            
             };
 
+            apiRequest('POST', `/v2/natural/exercise`,params,'NUTRITIONIX').then( function getData(result) {
+             // that.getVal(result);
+             let data = result.data;
 
-            axios.post("https://trackapi.nutritionix.com/v2/natural/exercise",   params,
+             let arr = [];
+                    //let text = `<div class = 'list-group'>`;
+                    var x= data.exercises;
+                   // console.log(x);
+                    const map =  x.map(i => {
+                  
+                    //arr[] = ;
+                    arr.push({nf_calories:i.nf_calories});
+                    that.setState({ ...that.state, calories: i.nf_calories })
+             console.log(data);
+             })
+            })
+            .catch(function getError(error){
+              console.log(error);
+            });
+           /* axios.post("https://trackapi.nutritionix.com/v2/natural/exercise",   params,
             {  headers: {
             
              'Access-Control-Allow-Origin': '*',
@@ -209,12 +312,12 @@ componentDidMount=()=>
                           //do something with value;
                       }
                   }*/
-                  });
+                 /* });
                 })
                 .catch(error => {
                     console.log(error);
           
-                });
+                });*/
 
     }
     render() {
