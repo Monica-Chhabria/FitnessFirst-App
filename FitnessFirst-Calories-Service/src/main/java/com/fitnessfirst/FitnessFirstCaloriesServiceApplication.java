@@ -11,8 +11,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 import com.fitnessfirst.logging.CalorieLogger;
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 @EnableEurekaClient
 @SpringBootApplication
+//this annotation is used to tell spring boot that encrypted properyies are present
+@EnableEncryptableProperties
 public class FitnessFirstCaloriesServiceApplication {
 
 	public static void main(String[] args) {
