@@ -19,9 +19,11 @@ public interface FoodDetailsRepository extends JpaRepository<FoodDetails, Intege
 	
 	//@Query(value = "SELECT SUM(calories) AS calories FROM FOOD_DETAILS WHERE username = ?1 and meal =?2 and last_modified_date =?3", nativeQuery = true)
 	@Query(value = "SELECT SUM(calories) AS calories FROM FOOD_DETAILS WHERE username = ?1 and meal =?2 and DATE_FORMAT(last_modified_date, \"%Y-%m-%d\") =?3", nativeQuery = true)
-  
 	Optional<BigDecimal> findTotalCalPerMeal(String emailAddress,String meal,Date date);
-	@Query(value = "SELECT * FROM FOOD_DETAILS WHERE username = ?1 and meal =?2 and DATE_FORMAT(last_modified_date, \"%Y-%m-%d\") =?3", nativeQuery = true)
-
+	
+	@Query(value = "SELECT SUM(calories) AS calories FROM FOOD_DETAILS WHERE username = ?1  and DATE_FORMAT(last_modified_date, \"%Y-%m-%d\") =?2", nativeQuery = true)
+	Optional<BigDecimal> findTotalCalPerDay(String emailAddress,Date date);
+	
+	@Query(value = "SELECT * FROM FOOD_DETAILS WHERE username = ?1  and DATE_FORMAT(last_modified_date, \"%Y-%m-%d\") =?2", nativeQuery = true)
 	Optional<List<FoodDetails>>	findAllCalPerMealPerDay(String emailAddress,String meal,Date date);
 }

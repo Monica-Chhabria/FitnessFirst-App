@@ -177,12 +177,13 @@ List<FoodDetails>    foodDetails2 = 	fooddetails.stream().map(fooddetail -> {foo
     	//return ResponseEntity.ok(jo) ;
 	}
 	@GetMapping("/nutrients/{food}")
+
 	public ResponseEntity<NutrientOutput> getNutrientService(@PathVariable("food")String food)
 	{
 		// uri = "https://trackapi.nutritionix.com/v2/natural/nutrients";
 		 final String  uri = env.getProperty("nutritionix.url");	
 		//	String uri  = "";
-		Nutrient nutrient = new Nutrient();
+		//Nutrient nutrient = new Nutrient();
 		NutrientInput nutrientInput = new NutrientInput(food, "US/Eastern");
 	/*	I suggest using one of the exchange methods that accepts an HttpEntity for which you can also set the HttpHeaders. (You can also specify the HTTP method you want to use.)
 
@@ -211,4 +212,21 @@ List<FoodDetails>    foodDetails2 = 	fooddetails.stream().map(fooddetail -> {foo
 		//String result = restTemplate.getForObject(uri, String.class);
 		 //restTemplate.getForEntity(uri, EmployeeListVO.class);
 	}
+	 @GetMapping("/totalCalPerDay/{username}")
+		public  ResponseEntity<?> getTotalCaloriesPerDay(@PathVariable("username")String email) throws JSONException
+		{
+	    	BigDecimal totalcalpermeal =  this.foodDetailsService.findTotalCalPerDay(email);
+	    	JSONObject jo = new JSONObject();
+
+	        totalcalpermeal =totalcalpermeal.setScale(2,BigDecimal.ROUND_HALF_DOWN);
+	    	 Map<String, Object> json = new HashMap<String, Object>();
+	         json.put("success", true);
+	        //System.out.println("after"+totalcalpermeal);
+	         json.put("totalcalperday", totalcalpermeal);
+	    	jo.put("totalcalperday", totalcalpermeal);
+	    	//return new ResponseEntity<>(jo, HttpStatus.OK);
+	        return new ResponseEntity<Map<String,Object>>(json,HttpStatus.CREATED);
+
+	    	//return ResponseEntity.ok(jo) ;
+		}
 }

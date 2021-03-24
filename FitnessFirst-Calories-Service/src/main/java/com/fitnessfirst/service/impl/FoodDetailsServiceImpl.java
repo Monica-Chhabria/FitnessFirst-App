@@ -8,12 +8,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fitnessfirst.service.FoodDetailsService;
 import org.springframework.stereotype.Service;
 
 import com.fitnessfirst.dao.FoodDetailsRepository;
 import com.fitnessfirst.model.FoodDetails;
-import com.fitnessfirst.service.FoodDetailsService;
+
+
 @Service
+
 public class FoodDetailsServiceImpl implements FoodDetailsService {
 
 	@Autowired
@@ -44,14 +48,26 @@ public class FoodDetailsServiceImpl implements FoodDetailsService {
 		 Date date = new Date();
 		 java.sql.Date sDate = new java.sql.Date(date.getTime());
 	     //  System.out.println(sDate);
-		 Optional<List<FoodDetails>> totalCal = this.foodDetailsRepository.findAllCalPerMealPerDay(emailAddress, meal,sDate);
+		 Optional<List<FoodDetails>> totalCal =
+		this.foodDetailsRepository.findAllCalPerMealPerDay(emailAddress, meal,sDate);
 		// float totalCalories =  totalCal.orElse(new Float(0));
 		// System.out.println(totalCal.get().size());
 		 List<FoodDetails> foodDetails = new ArrayList<FoodDetails>();
-		 if(totalCal.isPresent())
-		 {
+		 if(totalCal.isPresent()){
 			 return totalCal.get();
 		 }
 		 return foodDetails;
 	 }
+	@Override
+	public BigDecimal findTotalCalPerDay(String emailAddress) {
+		// TODO Auto-generated method stub
+		 Date date = new Date();
+		 java.sql.Date sDate = new java.sql.Date(date.getTime());
+	     //  System.out.println(sDate);
+		 Optional<BigDecimal> totalCal = this.foodDetailsRepository.findTotalCalPerDay(emailAddress,sDate);
+		 BigDecimal totalCalories =  totalCal.orElse(new BigDecimal(0));
+		 
+		 return totalCalories;
+		
+	}
 }

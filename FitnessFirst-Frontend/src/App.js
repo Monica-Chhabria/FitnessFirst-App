@@ -13,9 +13,9 @@ import {connect} from 'react-redux';
 import {logoutUser} from './Services/index';
 import RegisterForm from "./Components/RegisterForm";
 import FoodNutrients from './Components/FoodNutrients';
-import history from './Components/historytest';
 import Login from "./Components/Login";
 import Exercise from "./Components/Exercise";
+import AboutUs from "./Components/About";
 function App(props) {
   return (
     <div className="App">
@@ -32,7 +32,6 @@ function App(props) {
       <Route path = "/login" component = {Login} exact />
       <Route path = "/logout" component = {Home} exact />
       <Route path = "/register" component = {RegisterForm} exact />
-
         </Col>
       </Row>
       <Row>
@@ -49,6 +48,8 @@ function App(props) {
          <Route path = "/Lunch" component = {Lunch} exact />
          <Route path = "/Dinner" component = {Dinner} exact />
          <Route path = "/AddExercise" component = {Exercise} exact />
+         <Route path ="/AboutUs" component={AboutUs} exact />
+
          {/*<Route exact path="/nutrition/:calories" render={(props) => <FoodNutrients globalStore={globalStore} {...props} />  />*/}
 
          {/*

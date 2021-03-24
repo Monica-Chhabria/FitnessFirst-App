@@ -9,7 +9,9 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
+
 @EnableEurekaServer
+
 @EnableZuulProxy
 @SpringBootApplication
 public class FitnessFirstEurekaServerAppApplication {
@@ -17,7 +19,8 @@ public class FitnessFirstEurekaServerAppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FitnessFirstEurekaServerAppApplication.class, args);
 	}
-/*	@Bean
+
+	/*	@Bean
 	public CorsFilter corsFilter() {
 	    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 	    final CorsConfiguration config = new CorsConfiguration();
@@ -37,10 +40,10 @@ public class FitnessFirstEurekaServerAppApplication {
 	@Bean
 	public RestTemplate getRestTemplate(RestTemplateBuilder builder)
 	{
-	    return builder
-	            .setConnectTimeout(Duration.ofMillis(3000))
-	            .setReadTimeout(Duration.ofMillis(3000))
-	            .build();
+		return builder
+				.setConnectTimeout(Duration.ofMillis(3000))
+				.setReadTimeout(Duration.ofMillis(3000))
+				.build();
 	}
-	
+
 }

@@ -55,8 +55,9 @@ public class ExerciseController {
 	    HttpEntity <String> entity = new HttpEntity<String>(headers);
 	    final String uri =  env.getProperty("userdetailsfetchuser.url");
 	    UserDetail userDetail =  restTemplate.exchange(uri+exercise.getUsername(), HttpMethod.GET, entity, UserDetail.class).getBody();
-		
+	     if(null != userDetail){
 	    exercise.setUserid(userDetail.getId());
+	     }
 	    Exercise exercisdedet= this.exerciseDetailsService.saveExercise(exercise);
 	    	return ResponseEntity.ok(exercisdedet);
 	    	

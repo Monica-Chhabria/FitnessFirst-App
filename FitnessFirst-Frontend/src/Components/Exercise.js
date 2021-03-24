@@ -1,6 +1,5 @@
 import React from 'react';
 import { Form, FormGroup, Label, Input, FormText,Container,Col,Button } from 'reactstrap';
-import axios from 'axios';
 import { Table } from 'reactstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import {connect} from 'react-redux';
@@ -162,10 +161,13 @@ if (this.state.loading) {
     {
       try{ 
         
-        this.saveCalorie();
+        let status = this.saveCalorie();
+       if(status=="success")
+       {
       this.setState({ ...this.state,exercisedetails:  [...this.state.exercisedetails,{exercise,calories}]}, () => {
-        console.log("exercise details "+this.state.exercisedetails);      });
-
+     // console.log("exercise details "+this.state.exercisedetails);     
+     });
+       }
        
          
       }
@@ -216,11 +218,12 @@ if (this.state.loading) {
 
             apiRequest('POST', `/api/saveExercise`,params,'EXERCISE').then( function getData(result) {
               setTimeout(that.notify("success","Exercise Added Successfully"), 30000000);
-          
+              return "success";
              })
             .catch(function getError(error){
               setTimeout(that.notify("error","Error while adding Exercise"), 30000000);
               console.log(error);
+              return "error";
             });
 /*
         axios.post("http://localhost:8761/FITNESSFIRST-EXERCISE-SERVICE/api/saveExercise",   params,
@@ -352,7 +355,7 @@ if (this.state.loading) {
                        </FormGroup>
                        <FormGroup check row>
                             <Col sm={{ size: 12 }}>
-                                <Button onClick= {this.getCalorieDetails}>Search Calories Details</Button>{} <Button onClick={()=> {this.addExercise(this.state.exercise,this.state.calories)}}>Add Exercise</Button>
+                                <Button color="primary" onClick= {this.getCalorieDetails}>Search Calories Details</Button>{} <Button  color="primary" onClick={()=> {this.addExercise(this.state.exercise,this.state.calories)}}>Add Exercise</Button>
                             </Col>
                           
                         </FormGroup>

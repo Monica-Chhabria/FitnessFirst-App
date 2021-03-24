@@ -36,7 +36,7 @@ function Header(props) {
           <NavLink href="/components/">Home</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="/components/">About</NavLink>
+          <NavLink href="/AboutUs">About</NavLink>
         </NavItem>
         <NavItem>
           <NavLink href="/login">Login</NavLink>
@@ -63,10 +63,10 @@ const userLinks = (
     <Nav className="ml-auto" navbar>
 
       <NavItem>
-        <NavLink href="/components/">Home</NavLink>
+        <NavLink href="/">Home</NavLink>
       </NavItem>
       <NavItem>
-        <NavLink href="/components/">About</NavLink>
+        <NavLink href="/AboutUs">About</NavLink>
       </NavItem>
       {/*<NavItem>
         <NavLink href="/logout/" onClick={() => {logout()}}>Logout1</NavLink>
