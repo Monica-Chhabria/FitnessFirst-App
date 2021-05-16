@@ -1,4 +1,4 @@
-package com.fitnessfirst.Config;
+package com.fitnessfirst.config;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -41,7 +41,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
 	         } else {
 	             return Optional.of("Unknown");
 	         }*/
-		 System.out.println("user principle ");
+		 
 		 ;
 			  Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -52,7 +52,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
 		        }
 
 		        User userPrincipal = (User) authentication.getPrincipal();
-		        System.out.println("user principle "+userPrincipal.getUsername());
+		        //System.out.println("user principle "+userPrincipal.getUsername());
 		        return Optional.ofNullable(userPrincipal.getUsername());
 		 }
 }

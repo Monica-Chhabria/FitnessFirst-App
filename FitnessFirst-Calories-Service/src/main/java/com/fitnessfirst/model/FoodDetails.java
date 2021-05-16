@@ -18,11 +18,20 @@ import org.hibernate.envers.Audited;
 @Audited
 public class FoodDetails extends Auditable<String> {
 
+	@Override
+	public String toString() {
+		return "FoodDetails [id=" + id + ", userid=" + userid + ", username=" + username + ", foodname=" + foodname
+				+ ", meal=" + meal + ", calories=" + calories + ", total_fat=" + total_fat + ", cholesterol="
+				+ cholesterol + ", sugars=" + sugars + ", protein=" + protein + ", potassium=" + potassium
+				+ ", total_carbohydrate=" + total_carbohydrate + "]";
+	}
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	public FoodDetails() {
+	public  FoodDetails() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

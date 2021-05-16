@@ -14,7 +14,7 @@ import com.fitnessfirst.logging.CalorieLogger;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 @EnableEurekaClient
 @SpringBootApplication
-//this annotation is used to tell spring boot that encrypted properyies are present
+//this annotation is used to tell spring boot that encrypted properties are present
 @EnableEncryptableProperties
 public class FitnessFirstCaloriesServiceApplication {
 

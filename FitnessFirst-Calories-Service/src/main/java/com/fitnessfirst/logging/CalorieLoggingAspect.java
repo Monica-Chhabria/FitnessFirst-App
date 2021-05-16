@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CalorieLoggingAspect {
 	 // setup pointcut declaration
-    @Pointcut("execution(* com.fitnessfirst.Controller.*.*(..))")
+    @Pointcut("execution(* com.fitnessfirst.controller.*.*(..))")
     private void forControllerPackage() {
         
     }

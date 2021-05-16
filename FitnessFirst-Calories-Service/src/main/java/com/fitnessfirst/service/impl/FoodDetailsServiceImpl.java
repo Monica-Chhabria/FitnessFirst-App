@@ -17,21 +17,23 @@ import com.fitnessfirst.model.FoodDetails;
 
 
 @Service
-
 public class FoodDetailsServiceImpl implements FoodDetailsService {
 
-	@Autowired
+	
 	private FoodDetailsRepository foodDetailsRepository;
 	public FoodDetailsRepository getFoodDetailsRepository() {
 		return foodDetailsRepository;
 	}
+	@Autowired
 	public void setFoodDetailsRepository(FoodDetailsRepository foodDetailsRepository) {
 		this.foodDetailsRepository = foodDetailsRepository;
 	}
 	@Override
 	public FoodDetails saveFood(FoodDetails foodDetails) {
 		// TODO Auto-generated method stub
+		System.out.println("inside savefood");
 		FoodDetails fd = this.foodDetailsRepository.save(foodDetails);
+		System.out.println("fd"+fd);
 		return fd;
 	}
 	//function to get total cal per meal for current dsy
@@ -53,6 +55,8 @@ public class FoodDetailsServiceImpl implements FoodDetailsService {
 		// float totalCalories =  totalCal.orElse(new Float(0));
 		// System.out.println(totalCal.get().size());
 		 List<FoodDetails> foodDetails = new ArrayList<FoodDetails>();
+		 System.out.println("after executing repo");
+
 		 if(totalCal.isPresent()){
 			 return totalCal.get();
 		 }
@@ -64,6 +68,9 @@ public class FoodDetailsServiceImpl implements FoodDetailsService {
 		 Date date = new Date();
 		 java.sql.Date sDate = new java.sql.Date(date.getTime());
 	     //  System.out.println(sDate);
+		 System.out.println("sdate in service"+sDate);
+
+		// Sys
 		 Optional<BigDecimal> totalCal = this.foodDetailsRepository.findTotalCalPerDay(emailAddress,sDate);
 		 BigDecimal totalCalories =  totalCal.orElse(new BigDecimal(0));
 		 

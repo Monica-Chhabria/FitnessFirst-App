@@ -1,4 +1,4 @@
-package com.fitnessfirst.Exception;
+package com.fitnessfirst.exception;
 //Class for centralised exception handling
 
 import java.time.LocalDate;

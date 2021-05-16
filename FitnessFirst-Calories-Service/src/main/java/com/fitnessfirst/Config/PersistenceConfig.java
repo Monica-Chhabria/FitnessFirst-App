@@ -1,4 +1,4 @@
-package com.fitnessfirst.Config;
+package com.fitnessfirst.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

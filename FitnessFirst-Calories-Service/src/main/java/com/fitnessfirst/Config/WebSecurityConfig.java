@@ -1,4 +1,4 @@
-package com.fitnessfirst.Config;
+package com.fitnessfirst.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
