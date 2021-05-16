@@ -46,7 +46,7 @@ public class ControllerAdvisor  extends ResponseEntityExceptionHandler {
 	    public ResponseEntity<Object> handleInternalAuthenticationServiceException(InternalAuthenticationServiceException e) {
 		    Map<String, Object> body = new LinkedHashMap<>();
 	        body.put("timestamp", LocalDateTime.now());
-	        body.put("message", "Incorrect UserName or Password");
+	      //  body.put("message", "Incorrect UserName or Password");
 	        body.put("message", "failure");
 	        body.put("error", "Incorrect UserName or Password");
 

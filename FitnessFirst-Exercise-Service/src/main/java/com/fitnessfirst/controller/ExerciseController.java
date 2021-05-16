@@ -49,7 +49,7 @@ public class ExerciseController {
 		@Autowired
 		private Environment env;
 	  @PostMapping("/saveExercise")
-	    public ResponseEntity<Exercise> saveFoodDetails(@RequestBody Exercise exercise)
+	    public ResponseEntity<?> saveFoodDetails(@RequestBody Exercise exercise)
 	    { 	 HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	    HttpEntity <String> entity = new HttpEntity<String>(headers);
@@ -58,8 +58,17 @@ public class ExerciseController {
 	     if(null != userDetail){
 	    exercise.setUserid(userDetail.getId());
 	     }
+	     Map<String, Object> json = new HashMap<String, Object>();
+	        json.put("message", "failure");
 	    Exercise exercisdedet= this.exerciseDetailsService.saveExercise(exercise);
-	    	return ResponseEntity.ok(exercisdedet);
+	  
+	    
+	    if(exercisdedet != null){
+	    	 json.put("message", "success");
+	        return new ResponseEntity<Map<String,Object>>(json,HttpStatus.OK);
+	
+	    }	
+	    return ResponseEntity.ok(json);
 	    	
 	    }
 	  @GetMapping("/calBurntPerDay/{username}")
@@ -75,7 +84,7 @@ public class ExerciseController {
 	    	/*jo.put("calpermeal", totalcal);*/
 	    	
 	    	//return new ResponseEntity<>(jo, HttpStatus.OK);
-	        return new ResponseEntity<Map<String,Object>>(json,HttpStatus.CREATED);
+	        return new ResponseEntity<Map<String,Object>>(json,HttpStatus.OK);
 
 	    	//return ResponseEntity.ok(jo) ;
 		}
@@ -97,7 +106,7 @@ public class ExerciseController {
 	         json.put("totalcalburnt", totalcalpermeal);
 	    	jo.put("totalcalburnt", totalcalpermeal);
 	    	//return new ResponseEntity<>(jo, HttpStatus.OK);
-	        return new ResponseEntity<Map<String,Object>>(json,HttpStatus.CREATED);
+	        return new ResponseEntity<Map<String,Object>>(json,HttpStatus.OK);
 
 	    	//return ResponseEntity.ok(jo) ;
 		}
